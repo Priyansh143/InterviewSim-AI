@@ -1,10 +1,15 @@
 .venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd.cache
+huggingface
+.cache/huggingface
 .env
 logs/
 uploads/
 *.db
+*.sqlite
 *.pdf
 start.txt
 tests/
@@ -13,3 +18,5 @@ future_improvement.txt
 *.log
 autogen_archieve/
 .vscode/
+Docs/
+data/
