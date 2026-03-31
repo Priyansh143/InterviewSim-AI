@@ -10,6 +10,7 @@ Unlike typical AI interview tools that rely purely on prompts, InterviewSim uses
 
 *(Short walkthrough of the interview flow and evaluation system)*
 
+https://github.com/user-attachments/assets/c67f6a8a-bfd6-414b-b31b-fafc6eb7ed44
 <!-- <video here> -->
 
 ---
@@ -243,6 +244,9 @@ O --> G
 
 G --> P{User too strong
  in topic?<br/> Early stop}
+
+
+
 
 P -->|Yes| Q[Next JD Priority]
 P -->|No| H
