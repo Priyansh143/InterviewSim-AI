@@ -65,7 +65,7 @@ https://github.com/user-attachments/assets/c67f6a8a-bfd6-414b-b31b-fafc6eb7ed44
 
 ```bash
 git clone <https://github.com/Priyansh143/InterviewSim-AI>
-cd InterviewEvaluationSys
+cd InterviewSim-AI
 ````
 
 ## Run the Application
