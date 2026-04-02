@@ -208,58 +208,84 @@ This design allows the system to work well even with weaker or lower-cost LLMs.
 
 ---
 
-## System Architecture
+## Functional Architecture diagram
 
 ```mermaid
-flowchart TD
-A[User starts interview] --> B[Job Description
- +
-  Resume/Profile]
+flowchart TB
 
-B --> C[JD Topic Extraction LLM]
-C --> D[JD Priorities + Keywords]
+%% ---------------- USER ----------------
+U([👤 Candidate])
 
-D --> E[FAISS Resume Retrieval]
-E --> F[Relevant Resume Evidence]
+%% ---------------- CONTEXT INGESTION ----------------
+subgraph A["📥 Context Ingestion"]
+direction LR
+JD[📄 Job Description]
+RS[📑 Resume/Profile]
+TE[🧠 Topic Extraction LLM]
+VR[🔎 FAISS Retrieval]
 
-F --> G[Interview State Machine<br/>Topic tracking +
- Covered topics]
+JD --> TE
+RS --> VR
+TE --> VR
+end
 
-G --> H[Policy Decision Engine]
-H --> I{Question Type}
+%% ---------------- INTERVIEW ENGINE ----------------
+subgraph B["🤖 Interview Reasoning Engine"]
+direction LR
+SM[🧭 State Machine]
+PE[🎯 Policy Engine]
+QT{Question Strategy}
+IL[💬 Interviewer LLM]
 
-I -->|THEORY| J[Interviewer LLM]
-I -->|APPLIED| J
-I -->|DEPTH| J
-I -->|CLARIFICATION| J
+SM --> PE --> QT --> IL
+end
 
-J --> K[Interview Question]
-K --> L[Candidate Answer]
+%% ---------------- INTERACTION ----------------
+subgraph C["💬 Interview Interaction"]
+direction LR
+Q[❓ Interview Question]
+A1[🗣 Candidate Answer]
 
-L --> M[Evaluator LLM]
+Q --> A1
+end
 
-M --> N[Answer Evaluation<br/>Score + Strengths +
- Weaknesses + Confidence]
+%% ---------------- EVALUATION ----------------
+subgraph D["📊 Evaluation System"]
+direction LR
+EL[🧠 Evaluator LLM]
+SU[🔄 State Update]
+TR{More Topics?}
+FR[📑 Final Report]
 
-N --> O[State Update]
-
-O --> G
-
-G --> P{User too strong
- in topic?<br/> Early stop}
+EL --> SU --> TR
+TR -->|No| FR
+end
 
 
+%% FLOW
+U --> JD
+U --> RS
+
+VR --> SM
+IL --> Q
+A1 --> EL
+SU --> SM
+TR -->|Yes| PE
 
 
-P -->|Yes| Q[Next JD Priority]
-P -->|No| H
 
-Q --> R{More Topics?}
+%% STYLE
+classDef user fill:#E3F2FD,stroke:#1E88E5
+classDef ingest fill:#E8F5E9,stroke:#43A047
+classDef reasoning fill:#F3E5F5,stroke:#8E24AA
+classDef interaction fill:#FFF3E0,stroke:#FB8C00
+classDef evaluation fill:#ECEFF1,stroke:#546E7A
 
-R -->|Yes| H
-R -->|No| S[Generate Final Evaluation Report]
-
-S --> T[Interview Completed]
+class U user
+class JD,RS,TE,VR ingest
+class SM,PE,QT,IL reasoning
+class Q,A1 interaction
+class EL,SU,TR,FR evaluation
 ```
 
 ### Evaluation & Reporting Pipeline
