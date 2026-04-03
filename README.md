@@ -19,7 +19,7 @@ https://github.com/user-attachments/assets/b064245e-e0a4-4e65-9376-363554b10fae
 ## Key Highlights
 
 • **State-Machine Interview Engine** – deterministic interview control instead of LLM-driven conversations  
-• **Multi-Agent System** – Uses 4 dedicated agents in sync with state machine and smart prompting
+• **Multi-Agent System** – Uses 4 dedicated agents in sync with state machine and smart prompting <br>
 • **Policy-based question strategy** – adaptive question types based on candidate performance  
 • **Retrieval-augmented context** – questions grounded in resume + job description evidence  
 • **Semantic evaluation pipeline** – strengths/weaknesses clustered and aggregated into a final report  
